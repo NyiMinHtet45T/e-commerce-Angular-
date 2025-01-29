@@ -1,0 +1,9 @@
+<div class="mt-16 w-[95%] min-h-screen mx-auto">
+   <div class="space-x-3">
+      <span class="text-sm text-slate-700">Filter Product: </span>
+      <span class="underline text-green-800">{{name()}}</span>
+   </div>
+   <app-product-card [contents]="contents()" (onProductIdChange)="handleDeleteProduct($event)" (onProductChange)="handleAddToFavourite($event)"></app-product-card>
+   <app-pagination [pageInfo]="pageInfo()" (onPageChange)="linkChange($event)" (onSizeChange)="sizeChange($event)"></app-pagination>
+</div>
+

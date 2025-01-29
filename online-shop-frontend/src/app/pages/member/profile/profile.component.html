@@ -1,0 +1,42 @@
+<div>
+   <div *ngIf="sideNav()" >
+      <div (click)="handleNavClose()" class="w-full h-screen fixed top-0 left-0 bg-slate-800/50 z-10"></div>
+   </div>
+   <div class=" top-[8%] z-10 fixed">
+      <div class="w-[295px] flex relative" [ngClass]="{'left-[-250px] w-[-250px]' : !sideNav()}">
+         <div [ngClass]="{'left-0 w-[250px] duration-300': sideNav() ,'left-[-100%] w-[300px] duration-1000' : !sideNav()}"
+         class="fixed h-screen top-0 bg-slate-300 ">
+            <div  class="mt-16 ms-3 space-x-2 cursor-pointer flex">
+               <div class="w-[60px] relative rounded-full ms-3 h-[60px] bg-slate-400">
+                  <span class="absolute top-[22%] text-white left-[35%] text-2xl">{{ user()?.name.charAt(0) }}</span>
+               </div>
+               <div>
+                  <span class="block font-bold text-lg text-slate-700">{{ user()?.name }}</span>
+                  <span class="text-sm underline text-slate-600"> {{ user()?.email}}</span>
+               </div>  
+            </div>
+            <div class="h-[2px] m-4 mx-auto bg-slate-700"></div>
+            <div>
+               <ul class="flex flex-col cursor-pointer  text-gray-800">
+                  @for (item of navTab(); track $index) {
+                     <li (click)="handleRoute(item.title)" class="text-xl ps-14 hover:bg-slate-400 space-x-3 py-4  flex">
+                        <div class="text-white bg-slate-600 size-7 rounded-full  self-center">
+                           <mat-icon class="text-md ps-0.5 pt-0.5">{{item.icon}}</mat-icon>
+                        </div>
+                        <p class="text-lg">{{item.title}}</p>
+                     </li>
+                     <div class="h-[2px] w-[90%] m-4 mx-auto bg-slate-700"></div>
+                  }
+               </ul>
+            </div>
+         </div>
+         <div (click)="handleNavClose()" class="absolute duration-500 right-0  bg-slate-600 px-2 py-1 border-2 cursor-pointer border-white hover:bg-slate-700 rounded-lg text-white">
+            <mat-icon>menu</mat-icon>
+         </div>
+      </div>
+   </div>
+      
+   <div>
+      <router-outlet></router-outlet>
+   </div>
+</div>

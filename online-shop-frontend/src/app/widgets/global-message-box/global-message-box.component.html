@@ -1,0 +1,11 @@
+@if (showMessage()) {
+   <div class="relative fade-out z-30">
+      <div class="fixed bg-slate-500 h-auto w-[300px] rounded-lg bottom-2 border-2 border-black right-6">
+         <div class="flex text-white justify-center py-[9%] px-4">
+            @if (message != null) {
+               <span>{{message}}</span>
+            }
+         </div>
+      </div>
+   </div>
+}

@@ -1,0 +1,158 @@
+<div class="md:flex items-center pt-8 justify-center h-screen bg-gray-100">
+   <div class="relative flex flex-col m-6 space-y-3 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+      <div class="flex flex-col justify-center space-y-3 p-8 md:p-14">
+         <div class="space-y-8">
+            <span class="mb-3 font-bold text-3xl">Add Product</span>
+            <div class="grid grid-cols-4 justify-items-center">
+               @for (item of preview; track $index) {
+               <div class="flex relative">
+                  <img class="md:w-[80px] w-[60px]" [src]="item" alt="">
+                  <button (click)="handleRemove($index)" class="absolute -top-2 right-0">
+                     <mat-icon class="md:size-5 size-2">close</mat-icon>
+                  </button>
+               </div>
+               }
+            </div>
+         </div>
+         <form [formGroup]="form" (submit)="handleSubmit()">
+            <div class="">
+               <div class="flex space-x-3">
+                  <div class="py-2 w-[90%]">
+                     <app-form-contents label="Name" [touched]="form.get('name')?.touched"
+                        [invalid]="form.get('name')?.invalid">
+                        <input formControlName="name" input type="text"
+                           [ngClass]="{'border-red-700': form.get('name')?.touched && form.get('name')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                        <span text *ngIf="form.get('name')?.errors?.['required']">please enter product name!</span>
+                     </app-form-contents>
+                  </div>
+                  <div class="py-2 w-[300px]">
+                     <app-form-contents label="Image" [touched]="form.get('img')?.touched"
+                        [invalid]="form.get('img')?.invalid">
+                        <input input [disabled]="4 == images.length" type="file" (change)="onFileChange($event)"
+                           multiple [ngClass]="{'border-red-700': form.get('img')?.touched && form.get('img')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                        <span text *ngIf="form.get('img')?.errors?.['required']">please insert the Image!</span>
+                     </app-form-contents>
+                  </div>
+               </div>
+               <div class="flex space-x-3">
+                  <div class="py-2 w-full">
+                     <app-form-contents label="Description" [touched]="form.get('description')?.touched"
+                        [invalid]="form.get('description')?.invalid">
+                        <textarea formControlName="description" rows="2" input
+                           [ngClass]="{'border-red-700': form.get('description')?.touched && form.get('description')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"></textarea>
+                     </app-form-contents>
+                  </div>
+               </div>
+               <div class="flex space-x-3">
+                  <div class="py-2 w-full">
+                     <app-form-contents label="Price" [touched]="form.get('price')?.touched"
+                        [invalid]="form.get('price')?.invalid">
+                        <input formControlName="price" input type="number"
+                           [ngClass]="{'border-red-700': form.get('price')?.touched && form.get('price')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                        <span text *ngIf="form.get('price')?.errors?.['required']">please enter the product
+                           price!</span>
+                     </app-form-contents>
+                  </div>
+                  <div class="py-2 w-[30%]">
+                     <app-form-contents label="Available" [touched]="form.get('available')?.touched"
+                        [invalid]="form.get('available')?.invalid">
+                        <select formControlName="available" input
+                           [ngClass]="{'border-red-700': form.get('available')?.touched && form.get('available')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                           <option value="true">Yes</option>
+                           <option value="false">No</option>
+                        </select>
+                     </app-form-contents>
+                  </div>
+                  <div class="py-2 w-full">
+                     <app-form-contents label="CategoryName" [touched]="form.get('categoryName')?.touched"
+                        [invalid]="form.get('categoryName')?.invalid">
+                        <select formControlName="categoryName" input type="text"
+                           [ngClass]="{'border-red-700': form.get('categoryName')?.touched && form.get('categoryName')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                          @for (item of categories(); track $index) {
+                           <option [value]="item.name">{{item.name}}</option>
+                          }
+                        </select>
+                        <span text *ngIf="form.get('categoryName')?.errors?.['required']">please select category
+                           name!</span>
+                     </app-form-contents>
+                  </div>
+               </div>
+            </div>
+            <div class="w-full py-4">
+               <span class="font-bold text-md"></span>
+            </div>
+            <button type="submit" class="w-full bg-black text-white p-2 rounded-lg mb-6 
+         hover:bg-white hover:text-black hover:border hover:border-gray-300">
+         @if (productId() != undefined) {
+            <span>Update</span>
+         } @else {
+            <span>Create</span>
+         }
+            </button>
+         </form>
+      </div>
+   </div>
+   <div
+      class="relative flex flex-col min-h-[70%] m-6 space-y-3 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+      <div class="flex flex-col justify-center space-y-3 p-8 md:p-14">
+         <div class="space-y-8">
+            <span class="mb-3 font-bold text-3xl">Create Category</span>
+            <div>
+               <div class="flex relative justify-between items-center rounded-t-lg border-2 border-double">
+                  <input type="text" placeholder="Search Product..."
+                     class="sm:px-2 px-0.5 py-1 outline-none rounded-t-lg">
+                  <button
+                     class="bg-slate-400 hover:scale-105 hover:bg-slate-600 hover:text-white transition duration-150 px-1 rounded-s-none rounded-t-lg">
+                     <mat-icon class="text-2xl">
+                        search
+                     </mat-icon>
+                  </button>
+               </div>
+               <div class="h-[150px] rounded-b-lg overflow-y-auto w-full">
+                  <div class="space-y-1 bg-slate-300/50">
+                     @for (item of categories(); track $index) {
+                     <div
+                        class="text-center flex px-1 justify-between py-1.5 text-slate-700 hover:bg-slate-100 bg-slate-300">
+                        <span>{{item.name}}</span>
+                        <button (click)="handleDeleteCategory(item.id)"
+                           class=" bg-slate-200 flex items-center pb-1 text-red-700 hover:text-white hover:bg-red-600 rounded-full">
+                           <mat-icon class="text-lg">close</mat-icon>
+                        </button>
+                     </div>
+                     }
+                  </div>
+               </div>
+            </div>
+         </div>
+         <form [formGroup]="cateogryForm" (submit)="handleSubmitCategory()">
+            <div class="">
+               <div class="w-full">
+                  <span class="text-sm text-lime-700">didn't find category? Alright let's create;]</span>
+               </div>
+               <div class="flex space-x-3">
+                  <div class="py-2 w-full">
+                     <app-form-contents label="Name" [touched]="cateogryForm.get('name')?.touched"
+                        [invalid]="cateogryForm.get('name')?.invalid">
+                        <input formControlName="name" input type="text"
+                           [ngClass]="{'border-red-700': cateogryForm.get('name')?.touched && cateogryForm.get('name')?.invalid}"
+                           class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                        <span text *ngIf="cateogryForm.get('name')?.errors?.['required']">please enter category
+                           name!</span>
+                     </app-form-contents>
+                  </div>
+               </div>
+            </div>
+            <button type="submit" class="w-full bg-black text-white p-2 rounded-lg mb-6 
+                               hover:bg-white hover:text-black hover:border hover:border-gray-300">
+               Create
+            </button>
+         </form>
+      </div>
+   </div>
+</div>

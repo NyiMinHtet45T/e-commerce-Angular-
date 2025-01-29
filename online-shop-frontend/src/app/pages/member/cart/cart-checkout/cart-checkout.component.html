@@ -1,0 +1,40 @@
+<div class="mt-20 pb-24 ease-in-out hover:scale-105 duration-200 transition">
+   <div class="w-[80%] md:grid justify-center md:grid-cols-5  rounded-xl shadow-lg p-5 mx-auto bg-slate-300">
+      <div class="md:p-5 p-3 space-y-6 sm:col-span-2">
+         <span class="text-2xl font-bold text-slate-700">Shipping Fees</span>
+         <div>
+            <p class="lg:flex text-sm font-thin">
+               - Delivery at home [ Under 2-4 day ] <span class="text-sm font-bold">- 500 ks</span>
+            </p>
+            <span class="text-sm font-thin">- At NorthOkkalapa No.678 Nani </span>
+         </div>
+      </div>
+      <div></div>
+      <div class="md:p-5 p-3 space-y-5 md:col-span-2 justify-center">
+         <div class="w-[90%] mx-auto">
+            <div class="border-b-2 space-y-2 pb-3 border-slate-500">
+               <div class="flex justify-between">
+                  <span class=" font-normal text-slate-600">SUBTOTAL TTC</span>
+                  <span class="font-medium">{{ cartTotalPrice() }} Ks</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class=" font-normal text-slate-600">Delivery Fees</span>
+                  <span class="font-medium">+ 500 Ks</span>
+               </div>
+            </div>
+            <div class="flex justify-between">
+               <span class=" font-normal text-slate-600">TOTAL</span>
+               <span class="font-medium">{{ cartTotalPrice() + 500 }} Ks</span>
+            </div>
+         </div>
+         @if (cartTotalQuantity() > 0) {
+            <div (click)="goOrder()" class="flex border-2 py-2 cursor-pointer hover:bg-lime-600 hover:border-dashed duration-300 transition ease-in-out rounded-xl text-white bg-orange-600 px-5 justify-between">
+               <button class="font-bold text-md">
+                  CheckOut
+               </button>
+               <span class="font-bold text-md">{{ cartTotalPrice() + 500 }} Ks</span>
+            </div>
+         }
+      </div>
+   </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="flex flex-col md:w-[90%] w-[95%] mx-auto pt-10">
+   <table class="min-w-full">
+      <thead class="border-b-2 border-slate-300">
+         <tr class="">
+            <th class="md:p-5 p-1 text-left text-sm leading-6 font-semibold text-gray-800 ">No.</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Name</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Product</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Price</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">QTY</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">TOTAL</th>
+            <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Delete</th>
+         </tr>
+      </thead>
+      @for (item of cartItem(); track $index) {
+         <tbody>
+            <tr>
+               <td class="md:p-5  whitespace-nowrap text-sm leading-6 font-lg text-gray-900 "> {{$index + 1}} </td>
+               <td class="md:p-5 whitespace-nowrap text-sm leading-6 font-lg text-gray-900 ">{{ item.productName }}</td>
+               <td class="md:p-2 pt-3  text-gray-900 ">
+                  <img class="md:w-[90px] w-[50px] h-[50px] md:h-[25%] rounded-lg object-cover"
+                     [src]="'/products/' + item.productImg"
+                     alt="">
+               </td>
+               <td class="md:p-5 whitespace-nowrap md:text-lg leading-6 font-bold text-gray-900 ">{{item.productPrice}} ks</td>
+               <td class="md:p-5 ps-2 whitespace-nowrap text-gray-900 ">
+                  <button (click)="handleAddingQuantity(item.id, item.quantity, true)" class=" md:me-3 me-2  ">
+                     <span class="rounded-full border-2 border-slate-500 hover:border-lime-800 px-1">+</span>
+                  </button>
+                  <span class="md:text-2xl text-lg">{{ item.quantity }}</span>
+                  <button (click)="handleAddingQuantity(item.id, item.quantity, false)" class="md:ms-3 ms-2">
+                     <span class="rounded-full border-2 border-slate-500 hover:border-lime-800 px-1.5">-</span>
+                  </button>
+               </td>
+               <td class="md:p-5 whitespace-nowrap md:text-lg leading-6 font-bold text-gray-900 ">
+                  {{ item.totalPrice}} ks
+               </td>
+               <td class="md:p-5 p-1 whitespace-nowrap leading-6 font-bold text-gray-900 ">
+                  <button (click)="handleDelete(item.id)">
+                     <mat-icon class="text-sm font-bold md:text-lg">
+                        close
+                     </mat-icon>
+                  </button>
+               </td>
+            </tr>
+         </tbody>
+      }
+   </table>
+</div>

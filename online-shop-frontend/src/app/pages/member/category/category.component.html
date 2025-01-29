@@ -1,0 +1,12 @@
+<div class="mt-16 w-[95%] grid justify-items-stretch grid-cols-4 sm:grid-cols-6 md:grid-cols-7 gap-2 sm:gap-3 md:gap-5 mx-auto">
+   @for (item of categories(); track item.id) {
+      <div [routerLink]="['/filter-category/', item.name]"
+       routerLinkActive="router-link-active" 
+       [class.bg-slate-500]="currentCategory() === item.name"
+        class="shadow-lg cursor-pointer flex py-2 hover:border-dashed duration-150 transition hover:bg-slate-400 hover:text-white border-2 border-double border-black justify-center gap-2 md:gap-3 rounded-lg bg-slate-300">
+         <span class="truncate">
+            {{item.name}}
+         </span>
+      </div>
+   }
+</div>

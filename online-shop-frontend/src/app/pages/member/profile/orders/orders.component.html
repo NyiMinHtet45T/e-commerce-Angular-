@@ -1,0 +1,8 @@
+<div class="mt-16 min-h-screen">
+   <div>
+      <app-title-contents title="My Order"></app-title-contents>
+      <app-order-card [order]="order()" [isAdmin]="isAdmin()" (onItemStateChange)="handleStateChange($event)" (onItemDeleteChange)="handleCancelOrderItem($event)" (onOrderDeleteChange)="handleDeleteOrder($event)">
+
+      </app-order-card>
+   </div>
+</div>

@@ -1,0 +1,39 @@
+<nav class="flex fixed z-20 bg-slate-200 top-0 justify-between items-center w-full bg-red ">
+   <div class="px-1">
+      <h3 [routerLink]="['/home']" class="font-semibold cursor-pointer md:ps-5 w-16 text-slate-700 hover:scale-110 hover:text-blue-600 transition duration-150 text-2xl">NMH</h3>
+   </div>
+   
+   <div class="flex relative items-center rounded-lg border-2 border-double">
+      <input type="text" [(ngModel)]="searchText" placeholder="Search" class="sm:px-2 px-0.5 py-1 outline-none rounded-s-lg">
+      <button (click)="goCart()"  class="bg-slate-400 hover:scale-105 hover:bg-slate-600 hover:text-white transition duration-150 sm:px-1 rounded-e-lg">
+         <mat-icon class="text-2xl">
+            search
+         </mat-icon>
+      </button>
+   </div>
+   <div class="flex justify-center items-center gap-3 sm:gap-x-5">
+      <div class="relative inline-block hover:scale-110 transition duration-150">
+         <button [routerLink]="['/cart']" class="text-gray-700 px-1 text-3xl focus:outline-none">
+           <mat-icon>shopping_cart</mat-icon>
+         </button>
+         @if (user()) {
+            <span class="absolute top-0  right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
+               {{cartTotalItem}}
+            </span>
+         }
+      </div>
+      <div>
+         <button [routerLink]="user() ? ['/members','profile','detail'] : ['/anonymous/signin']" routerLinkActive="router-link-active"  class="bg-slate-500 sm:text-12 text-white pb-0.5 px-2 sm:px-4 sm:py-2 my-2 rounded-full duration-200 transition hover:bg-slate-700">
+            <div *ngIf="!user(); else login">
+               <span>Sign In</span>
+            </div>
+            <ng-template #login>
+               <span>{{ userName()?.charAt(0)}}</span>
+            </ng-template>
+         </button>
+      </div>
+      
+   <div>
+   </div>
+   </div>
+</nav>

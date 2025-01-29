@@ -1,0 +1,110 @@
+<div class="mt-16">
+   @for (order of order(); track $index) {
+      <div class="sm:w-[90%] w-[95%] mt-5 mx-auto bg-slate-300 rounded-md">
+         <button
+            class="w-full text-left  border-2 border-double hover:border-dashed border-slate-600  md:p-4 p-1 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+            (click)="handleShowContent(order.id)">
+            <div  class="flex w-[90%] space-x-1 justify-between items-center">
+               <div>
+                  <span class="font-medium text-gray-800">No. </span>
+                  <span class="px-1 rounded-lg text-sm bg-slate-300/70">{{ $index + 1}}</span>
+               </div>
+               <div >
+                  <span class="font-medium  md:inline-block block text-gray-800">Date: </span>
+                  <span class="px-1 rounded-lg text-sm  bg-slate-300/70">{{order.orderDate}}</span>
+               </div>
+               <div>
+                  <span class="font-medium text-gray-800">User Name: </span>
+                  <span class="px-1 block sm:inline rounded-lg text-sm bg-slate-300/70">{{order.username}}</span>
+               </div>
+            </div>
+            <div class="flex justify-between items-center">
+               
+               <div>
+                  <span class="font-medium text-gray-800">Total Price: </span>
+                  <span class="px-1 rounded-lg text-sm bg-slate-300/70">{{order.totalPrice}} ks</span>
+               </div>
+               <div>
+                  <span class="font-medium text-gray-800">Total Item: </span>
+                  <span class="px-1 rounded-lg text-sm bg-slate-300/70">{{order.totalItem}}</span>
+               </div>
+               <div>
+                  <span class="font-medium text-gray-800">Address: </span>
+                  <span class="px-1 block sm:inline rounded-lg text-sm bg-slate-300/70">
+                     {{order.addressInfo.street}}/{{order.addressInfo.houseNo}}/{{order.addressInfo.city}}
+                  </span>
+               </div>
+               <div>
+                  <button (click)="handleDeleteOrder(order.id)" class="text-red-700 px-1  flex items-center hover:bg-red-700 hover:text-white bg-red-200 py-0.5 rounded-lg">
+                     <mat-icon>delete</mat-icon>
+                  </button>
+               </div>
+               <div>
+                  <mat-icon class="transition-transform transform"
+                  [class.rotate-180]="showContent()">arrow_downward</mat-icon>
+               </div>
+            </div>
+         </button>
+         <div class="overflow-hidden transition-max-height duration-500 border-dashed"
+            [style.maxHeight]="(showContent() && content() == order.id ) ? '350px' : '0px'">
+            <div class="">
+               <table class="min-w-full">
+                  <thead class="border-b-2 border-slate-300">
+                     <tr class="">
+                        <th class="md:p-5 p-1 text-left text-sm leading-6 font-semibold text-gray-800 ">No.</th>
+                        <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Name</th>
+                        <th class="md:p-5 p-1 text-left text-sm leading-6 font-semibold text-gray-800 ">Product</th>
+                        <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Price</th>
+                        <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">QTY</th>
+                        <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">TOTAL</th>
+                        <th class="md:p-5 text-left text-sm leading-6 font-semibold text-gray-800 ">Status</th>
+                     </tr>
+                  </thead>
+                  @for (item of order.orderItemInfo; track $index) {
+                  <tbody>
+                     <tr>
+                        <td class="md:ps-5 ps-3  whitespace-nowrap text-sm leading-6 font-lg text-gray-900 ">{{$index + 1}}</td>
+                        <td class="md:ps-5 whitespace-nowrap text-sm leading-6 font-lg text-gray-900 ">{{ item.orderProductInfo.name}}</td>
+                        <td class="md:ps-5 ps-3 pb-3   text-gray-900 ">
+                           <img class="md:w-[70px] w-[50px] h-[50px] md:h-[25%] rounded-lg object-cover"
+                              [src]="'/products/' +  item.orderProductInfo.img"
+                              alt="">
+                        </td>
+                        <td class="md:ps-5 whitespace-nowrap md:text-lg leading-6 font-bold text-gray-900 ">{{item.orderProductInfo.price}} ks</td>
+                        <td class="md:ps-5 ps-2 whitespace-nowrap text-gray-900 ">
+                           <span class="md:text-2xl text-lg">{{item.quantity}}</span>
+                        </td>
+                        <td class="md:p-5 whitespace-nowrap md:text-lg leading-6 font-bold text-gray-900 ">
+                           {{item.totalPrice}} ks
+                        </td>
+                        <td class="md:p-5 p-1 whitespace-nowrap leading-6 font-bold text-gray-900 ">
+                          @if (isAdmin()) {
+                           <select #state (click)="handleUpdateState(state.value, item.id)" [value]="item.orderStatus" class="py-2 bg-slate-100 px-2 rounded-lg">
+                              <option value="Pending">PENDING</option>
+                              <option value="Placed">PLACED</option>
+                              <option value="Shipped">SHIPPED</option>
+                              <option value="Delivered">DELIVERED</option>
+                             </select>
+                          } @else {
+                           <span class="py-2 px-2 rounded-lg bg-slate-100">{{item.orderStatus}}</span>
+                              
+                          }
+                        </td>
+                        @if (isAdmin()) {
+                           <td class="md:p-5 p-1 whitespace-nowrap leading-6 font-bold text-gray-900 ">
+                              <button (click)="handleCancelOrderItem(order.id,item.id)">
+                                 <mat-icon class="text-sm font-bold md:text-lg">
+                                    close
+                                 </mat-icon>
+                              </button>
+                           </td>
+                        }
+                     </tr>
+                  </tbody>
+                  }
+               </table>
+            </div>
+         </div>
+      </div>
+   }
+</div>

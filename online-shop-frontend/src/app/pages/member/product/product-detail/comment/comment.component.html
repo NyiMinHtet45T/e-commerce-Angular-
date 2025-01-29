@@ -1,0 +1,93 @@
+<div class="pt-6">
+   <div class="md:w-[95%] w-[90%] pb-3 space-y-4 mx-auto">
+      <div class="space-x-5">
+         <span class="text-2xl text-slate-700">Comment</span>
+         <span class="text-lg underline text-slate-500">{{totalAndAvgRating()?.totalComment}} review</span>
+      </div>
+      <div class="px-2 border-2 border-dotted bg-slate-300">
+         <div [ngClass]="{'hidden': rows() == 1 }" class="m-2 flex">
+            <div class="">
+               <span class="px-2 self-center py-1 rounded-full bg-white">
+                  {{user()?.name?.charAt(0)}}
+               </span>
+            </div>
+            <div>
+               <span class="text-sm ms-1 underline">
+                  {{user()?.name}}
+               </span>
+            </div>
+            <span class="w-[0.2%] ms-3 rounded-lg bg-slate-600"></span>
+            <div class="ps-3">
+               <button>
+                  @for (i of [1,2,3,4,5]; track $index) {
+                  <button [class.text-slate-800]="i <= rating()" [class.text-gray-400]="i >= rating()"
+                     (click)="handleRating(i)">
+                     <mat-icon class="text-sm">
+                        star
+                     </mat-icon>
+                  </button>
+                  }
+               </button>
+            </div>
+         </div>
+         <textarea [(ngModel)]="commentText" placeholder="comment..." type="text" (click)="handleRows(3)"
+            [rows]="rows()" class="w-full px-2 bg-transparent rounded-lg"></textarea>
+         <div [ngClass]="{'hidden': rows() == 1 }" class="flex justify-end space-x-2 m-2 me-4">
+            <button (click)="handleComment()"
+               class="px-3 py-1 bg-slate-400 rounded-full hover:bg-slate-500 border-2 border-black hover:text-white hover:border-white">Submit</button>
+            <button (click)="handleRows(1)"
+               class="px-3 py-1 bg-red-400 rounded-full hover:bg-red-500 border-2 border-red-800 hover:text-white hover:border-white">Cancel</button>
+         </div>
+      </div>
+   </div>
+   @for (item of commentList(); track $index) {
+   <div class="pt-1 pb-2">
+      <div class="md:w-[95%] w-[90%] px-2 border-2 border-dashed bg-slate-300 mx-auto">
+         <div class="m-2 flex">
+            <div class="">
+               <span class="px-2 self-center py-1 rounded-full bg-white">
+                  {{item.userName.charAt(0)}}
+               </span>
+            </div>
+            <div>
+               <span class="text-sm ms-1 underline">
+                  {{item.userName}}
+               </span>
+            </div>
+            <span class="w-[0.2%] ms-3 rounded-lg bg-slate-600"></span>
+            <div class="ps-3">
+               <span class="text-sm underline">
+                  {{item.createAt}}
+               </span>
+            </div>
+            <span class="w-[0.2%] text-gray-300 ms-3 rounded-lg bg-slate-600"></span>
+            <div class="ps-3">
+               @for (i of [1,2,3,4,5]; track $index) {
+               <mat-icon [class.text-slate-800]="i <= item.rating" [class.text-gray-400]="i >= item.rating"
+                  class="text-sm">
+                  star
+               </mat-icon>
+               }
+            </div>
+         </div>
+         <div class="text-sm  pb-3 ps-3">
+            <p class="bg-slate-200 px-2">{{item.comment}}</p>
+         </div>
+      </div>
+   </div>
+   }
+
+
+   @if (!last()) {
+      <div class="flex w-full mt-5 items-center">
+      <div class="flex-1 border-b border-slate-400"></div>
+      <button (click)="handleSeeMore()" class="px-2 py-2 flex items-center hover:bg-slate-700 hover:text-white hover:border-white bg-white rounded-full shadow-sm border border-gray-400">
+         <mat-icon>add</mat-icon>
+         <span class=" text-sm font-semibold leading-relaxed px-2">see more</span>
+      </button>
+      <div class="flex-1 border-b border-slate-400"></div>
+   </div>
+   }
+
+
+</div>

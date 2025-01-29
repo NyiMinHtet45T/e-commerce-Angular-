@@ -1,0 +1,78 @@
+<div>
+   <div
+      class="grid mt-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-2 mx-auto my-5 w-[95%]">
+      @for (item of contents(); track item.id) {
+      <div
+         class="md:w-[80%] cursor-pointer mt-6 w-[70%] ease-in-out h-96 hover:scale-105 duration-100 transition relative rounded-md shadow-lg shadow-slate-500">
+         <div class="static ">
+            <div (click)="goDetail(item.id)" class="m-3">
+               <img class="w-full h-60 rounded-md" [src]="'/products/'+ item.img" alt="">
+            </div>
+            <div class="m-3">
+               <div class="flex mt-2 items-center justify-between">
+                  <div class="flex  w-[70%]   space-x-1">
+                     <span class="text-slate-500 text-sm">Name:</span>
+                     <h1 class="text-md truncate font-semibold">{{ item.name }}</h1>
+                  </div>
+                  <div (click)="handleAddToFavourite(item.id)" class="me-4">
+                     <button 
+                        class="px-2 pt-1 rounded-lg duration-100 transition text-white hover:bg-slate-500 bg-slate-400">
+                        <div *ngIf="item.isFavourite; else favourite">
+                           <mat-icon>
+                              favorite
+                           </mat-icon>
+                        </div>
+                        <ng-template #favourite>
+                           <mat-icon class="material-icons-outlined">
+                              favorite_border
+                           </mat-icon>
+                        </ng-template>
+                     </button>
+                  </div>
+               </div>
+               <div class="flex space-x-1">
+                  <span class="text-slate-500 text-sm">Category:</span>
+                  <h1 class="truncate text-md font-semibold">{{ item.categoryName }}</h1>
+               </div>
+               <div class="flex space-x-1">
+                  <span class="text-slate-500 text-sm">Price:</span>
+                  <h1 class="truncate text-sm text-red-600 font-semibold">{{ item.price }} ks</h1>
+               </div>
+            </div>
+            @if (isAdmin()) {
+               <div class="flex rounded-b-lg py-1">
+                  <button (click)="handleDelete(item.id)"
+               class="w-[50%] justify-center hover:bg-white flex text-red-700 bg-red-300">
+               <mat-icon>delete</mat-icon>
+               </button>
+               <button (click)="handleUpdate(item.id)" 
+               class="w-[50%] justify-center flex hover:bg-white text-yellow-700 bg-yellow-300">
+               <mat-icon>update</mat-icon>
+               </button>
+               </div>
+            } @else {
+               <button (click)="handleAddToCart(item)" [disabled]="!item.available"
+               class="w-[100%] justify-center rounded-b-lg text-white space-x-1 duration-100 transition hover:bg-slate-500 py-1 flex bg-slate-400">
+               @if (item.available) {
+               <div>
+                  <span>Add To Cart</span>
+                  <mat-icon class="material-icons-outlined pt-2 text-sm">
+                     beenhere
+                  </mat-icon>
+               </div>
+               } @else {
+                  <div>
+                     <span>Not Available</span>
+                     <mat-icon class="material-icons-outlined">
+                        close
+                     </mat-icon>
+                  </div>
+               }
+            </button>
+            }
+         </div>
+      </div>
+      }
+   </div>
+</div>
+

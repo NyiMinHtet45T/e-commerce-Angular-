@@ -1,0 +1,56 @@
+<div class="min-h-screen">
+   <div class="md:pt-44 sm:pt-32 pt-20">
+      <div class="flex justify-center">
+         <div class="w-[150px] block bg-slate-400 rounded-full relative h-[140px] ">
+            <span class="absolute text-white top-[30%] left-[37%] text-5xl">{{ user()?.name.charAt(0) }}</span>
+         </div>
+      </div>
+      <div class="flex justify-center mt-5">
+         <div class="space-y-3 w-[230px]">
+            @for (item of profielDetail; track $index) {
+               <div class="flex space-x-3 justify-center">
+                  <span class="text-slate-600 text-md">{{item.title}}: </span>
+                  <span class="text-lime-800 font-bold rounded-lg bg-slate-300/70">{{item.value}}</span>
+               </div>
+               <div class="h-[1.5px] w-[90%] mx-auto bg-slate-700"></div>
+            }
+            <div class="flex space-x-3 justify-center">
+               @if (isChange()) {
+                  <form [formGroup]="passwordForm">
+                     <div class="space-y-2">
+                        <div>
+                           <span class="text-slate-600 text-md">Old Pas: </span>
+                           <input formControlName="oldPassword" type="password" class="w-[50%] px-1 rounded-lg border-2 hover:border-slate-800 text-sm ms-4" placeholder="old pas..">
+                           <div *ngIf="passwordForm.get('oldPassword')?.touched && passwordForm.get('oldPassword')?.invalid" class="text-red-600 text-sm">
+                              <span *ngIf="passwordForm.get('oldPassword')?.errors?.['required']">please enter old password!</span>
+                              <span *ngIf="passwordForm.get('oldPassword')?.errors?.['minlength']">password must be 4 character long!</span>
+                           </div>
+                           
+                        </div>
+                        <div>
+                           <span class="text-slate-600 text-md">New Pas:</span>
+                           <input formControlName="newPassword" type="text" class="w-[50%] px-1 rounded-lg border-2 hover:border-slate-800 text-sm ms-3" placeholder="new pas...">
+                           <div *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.invalid" class="text-red-600 text-sm">
+                              <span *ngIf="passwordForm.get('newPassword')?.errors?.['required']">please enter new password!</span>
+                              <span *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">password must be 4 character long!</span>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               } @else {
+                  <div>
+                     <span class="text-slate-600 text-md">Password: </span>
+                     <span class="text-lime-800 font-bold px-2 rounded-lg bg-slate-300/70">*******</span>
+                  </div>
+               }
+            </div>
+            <div class="flex justify-center">
+               <button (click)="handleChangePassword()" class="flex border-2 py-2 hover:bg-lime-600 hover:border-dashed duration-300 transition ease-in-out rounded-xl text-white bg-slate-600 px-5">
+                  <span>Change Password</span>
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+

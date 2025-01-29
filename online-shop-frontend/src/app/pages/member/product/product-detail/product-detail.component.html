@@ -1,0 +1,110 @@
+<!--HTML CODE-->
+<div class="md:mt-20 lg:mt-16 space-y-14 mt-14 pb-16 ">
+   <app-title-contents title="Product Detail"></app-title-contents>
+   <div class="sm:flex">
+      <div class="md:w-[200px] mx-auto">
+         <div class="w-[410px] h-[320px] mt-4 mx-auto relative">
+            <div class="h-[300px] relative w-[300px]  mx-auto overflow-hidden">
+               <div [style.transform]="'translateX(-' + currentIndex() * 100 + '%)'"
+                  class="flex transition-transform duration-300 ease-in-out">
+                  <div class="flex-shrink-0 h-auto w-[300px]">
+                     <img [src]="'/products/' + product().img[0]" alt="">
+                  </div>
+                  <div class="flex-shrink-0 h-auto w-[300px]">
+                     <img [src]="'/products/' + product().img[1]" alt="">
+                  </div>
+                  <div class="flex-shrink-0 h-auto w-[300px]">
+                     <img [src]="'/products/' + product().img[2]" alt="">
+                  </div>
+                  <div class="flex-shrink-0 h-auto w-[300px]">
+                     <img [src]="'/products/' + product().img[3]" alt="">
+                  </div>
+               </div>
+            </div>
+            <div>
+               <span class="w-[0.3%] rounded-lg bg-slate-600">
+                  <button (click)="prevSlide()"
+                     class="absolute top-1/2 left-0 p-2 flex items-center transform -translate-y-1/2 bg-black bg-opacity-50 text-white  rounded-full">
+                     <mat-icon>chevron_left</mat-icon>
+                  </button>
+                  <button (click)="nextSlide()"
+                     class="absolute top-1/2 right-0 p-2 flex items-center transform -translate-y-1/2 bg-black bg-opacity-50 text-white  rounded-full">
+                     <mat-icon>chevron_right</mat-icon>
+                  </button>
+               </span>
+            </div>
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2">
+               @for (item of product()?.img; track $index) {
+               <button (click)="gotoSlide($index)" data-slide="0" class="w-[50px] h-3  focus:outline-none">
+                  <img
+                     [ngClass]="{'border-dashed' : currentIndex() == $index, 'border-double ' : currentIndex() != $index}"
+                     class="border-2 border-black hover:border-dashed"
+                     [src]="'/products/' + item"
+                     alt="">
+               </button>
+               }
+            </div>
+         </div>
+      </div>
+      <div class="w-[0.1%] hidden md:block bg-slate-500"></div>
+      <div class="md:ms-7 mt-14 mx-auto ms-4">
+         <div class="md:space-y-9 space-x-7">
+            <div class="space-y-4 ms-6">
+               <div class="space-y-2">
+                  <h1 class="md:text-4xl text-3xl text-slate-700 font-serif">{{product()?.name}}</h1>
+                  <div>
+                     <span class="md:text-md text-slate-500 text-sm">category:  </span>
+                     <span class="md:text-md text-lime-800 underline text-sm">{{product()?.categoryName}}</span>
+                  </div>
+               </div>
+               <p class="text-sm text-slate-600">{{product()?.description}}</p>
+            </div>
+            <div class="md:space-y-20 space-x-2 space-y-5">
+               <div class="space-y-3 pt-5">
+                  <h1 class="text-3xl font-mono">{{product()?.price}} ks</h1>
+                  <div>
+                     <div class="space-x-2">
+                        <span class="text-2xl text-yellow-500">Rating: </span>
+                        <span class="text-lg font-bold">{{ totalRating() }}</span>
+                     </div>
+                     @for (i of [1,2,3,4,5]; track $index) {
+                     <mat-icon [class.text-yellow-500]="i <= totalRating()" [class.text-gray-400]="i >= totalRating()" class="text-lg">
+                        star
+                     </mat-icon>
+                     }
+                  </div>
+               </div>
+               <button [disabled]="!product()?.available"
+               (click)="handleAddToCart()"
+                  class="items-center justify-center pb-3 ps-5 pe-3 hover:bg-slate-700  py-1 text-white bg-slate-500">
+                  @if (product()?.available) {
+                  <div>
+                     <span>Add To Cart</span>
+                     <mat-icon class="material-icons-outlined text-sm pt-2">
+                        beenhere
+                     </mat-icon>
+                  </div>
+                  } @else {
+                  <div>
+                     <span>Not Available</span>
+                     <mat-icon class="material-icons-outlined">
+                        close
+                     </mat-icon>
+                  </div>
+                  }
+               </button>
+               <!-- <button
+                  class="items-center justify-center pb-3 ps-5 pe-3 hover:bg-slate-700  py-1 text-white bg-slate-500">
+                  Return
+                  <mat-icon class="material-icons-outlined text-sm pt-2">
+                     arrow_back
+                  </mat-icon>
+               </button> -->
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <p class="bg-slate-600 rounded-lg h-1 w-[90%] mx-auto"></p>
+<app-comment [productId]="id()" (ratingEmitter)="totalRating.set($event)"></app-comment>
+</div>

@@ -1,0 +1,49 @@
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+   <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+      <div class="flex flex-col justify-center p-8 md:p-14">
+         <span class="mb-3 font-bold text-3xl">Sign In</span>
+         <h1 class="font-light text-gray-400 mb-8">Welcom back Please enter your details</h1>
+         <form [formGroup]="form">
+            <div class="py-4">
+              <app-form-contents label="Name" [touched]="form.get('name')?.touched" [invalid]="form.get('name')?.invalid">
+                  <input formControlName="name" input type="text" [ngClass]="{'border-red-700': form.get('name')?.touched && form.get('name')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('name')?.errors?.['required']">please enter your name!</span>
+              </app-form-contents>
+            </div>
+            <div class="py-4">
+               <app-form-contents label="Password" [touched]="form.get('password')?.touched" [invalid]="form.get('password')?.invalid">
+                  <input formControlName="password" input type="password" [ngClass]="{'border-red-700': form.get('name')?.touched && form.get('name')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('password')?.errors?.['required']">please enter the password!</span>
+                  <span text *ngIf="form.get('password')?.errors?.['minlength']">password must be 4 character long!</span>
+              </app-form-contents>
+            </div>
+         </form>
+         <div class="flex justify-between w-full py-4">
+            <div class="mr-24">
+               <input type="checkbox" class="mr-2">
+               <span class="text-md">Remember for 30 days</span>
+            </div>
+            <span class="font-bold text-md">Forget password</span>
+         </div>
+         <button (click)="handleSubmit()" class="w-full bg-black text-white p-2 rounded-lg mb-6 
+         hover:bg-white hover:text-black hover:border hover:border-gray-300">
+            Sign In
+         </button>
+         <div class="text-center text-gray-500">
+            Don't have an account?
+            <span [routerLink]="['/anonymous/signup']" class="font-bold cursor-pointer hover:underline text-blue-600">
+               Sign up for free
+            </span>
+         </div>
+      </div>
+      <div class="relative bg-slate-200 ">
+            <img src="Social media marketing.jpg" alt="" class=" w-[400px] h-full hidden rounded-tr-2xl md:block object-cover">
+            <div class="absolute hidden bottom-10 right-6 p-6 bg-whit bg-opacity-30 backdrop-blur-sm drop-shadow-lg md:block">
+               <span class="text-slate-700 text-xl">
+                  We've been using untitle to kick <br> start every new project and can't <br> imagine working without it
+               </span>
+            </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="mt-16 min-h-screen">
+   <div>
+      <app-title-contents title="My Favourite"></app-title-contents>
+      <div>
+         <app-product-card [contents]="favourite()" (onProductIdChange)="handleDeleteProduct($event)" (onProductChange)="handleAddToFavourite($event)"></app-product-card>
+      </div>
+      
+   </div>
+</div>

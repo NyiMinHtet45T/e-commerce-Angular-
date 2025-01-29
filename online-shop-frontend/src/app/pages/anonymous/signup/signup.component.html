@@ -1,0 +1,55 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+   <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+      <div class="flex flex-col justify-center p-8 md:p-14">
+         <span class="mb-3 font-bold text-3xl">Sign Up</span>
+         <h1 class="font-light text-gray-400 mb-3">To Order The Product You Need To Create Account First!</h1>
+         <form [formGroup]="form">
+            <div class="py-2">
+               <app-form-contents label="Name" [touched]="form.get('name')?.touched" [invalid]="form.get('name')?.invalid">
+                  <input formControlName="name" input type="text" [ngClass]="{'border-red-700': form.get('name')?.touched && form.get('name')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('name')?.errors?.['required']">please enter your name!</span>
+              </app-form-contents>
+            </div>
+            <div class="py-2">
+               <app-form-contents label="Email" [touched]="form.get('email')?.touched" [invalid]="form.get('email')?.invalid">
+                  <input formControlName="email" input type="email" [ngClass]="{'border-red-700': form.get('email')?.touched && form.get('email')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('email')?.errors?.['required']">please enter your email!</span>
+                  <span text *ngIf="form.get('email')?.errors?.['email']">invalid email!</span>
+              </app-form-contents>
+            </div>
+            <div class="py-2">
+               <app-form-contents label="Password" [touched]="form.get('password')?.touched" [invalid]="form.get('password')?.invalid">
+                  <input formControlName="password" input type="password" [ngClass]="{'border-red-700': form.get('password')?.touched && form.get('password')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('password')?.errors?.['required']">please enter your password!</span>
+                  <span text *ngIf="form.get('password')?.errors?.['minlength']">password must have 4 character long!</span>
+              </app-form-contents>
+            </div>
+            <div class="py-2">
+               <app-form-contents label="phoneNumber" [touched]="form.get('phoneNumber')?.touched" [invalid]="form.get('phoneNumber')?.invalid">
+                  <input formControlName="phoneNumber" input type="text" [ngClass]="{'border-red-700': form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid}" class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                  <span text *ngIf="form.get('phoneNumber')?.errors?.['required']">please enter your phoneNumber!</span>
+                  <span text *ngIf="form.get('phoneNumber')?.errors?.['minlength']">phonenumber must have 7 character long!</span>
+              </app-form-contents>
+            </div>
+         </form>
+         <button (click)="handleSubmit()" class="w-full mt-2 bg-black text-white p-2 rounded-lg mb-6 
+         hover:bg-white hover:text-black hover:border hover:border-gray-300">
+            Sign In
+         </button>
+         <div class="text-center text-gray-500">
+            Already have an account?
+            <span [routerLink]="['/anonymous/signin']" routerLinkActive="router-link-active"  class="font-bold cursor-pointer hover:underline text-blue-600">
+               Login in
+            </span>
+         </div>
+      </div>
+      <div class="relative bg-slate-200 ">
+            <img src="Uwu.jpg" alt="" class=" w-[400px] h-full hidden rounded-tr-2xl md:block object-cover">
+            <div class="absolute hidden bottom-10 right-6 p-6 bg-whit bg-opacity-30 backdrop-blur-sm drop-shadow-lg md:block">
+               <span class="text-slate-700 text-xl">
+                  We've been using untitle to kick <br> start every new project and can't <br> imagine working without it
+               </span>
+            </div>
+      </div>
+   </div>
+</div>

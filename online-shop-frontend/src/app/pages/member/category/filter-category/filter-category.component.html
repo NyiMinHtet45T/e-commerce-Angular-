@@ -1,0 +1,6 @@
+<div>
+   <app-category [currentCategory]="name()"></app-category>
+   <app-product-card [contents]="contents()" (onProductIdChange)="handleDeleteProduct($event)" (onProductChange)="handleAddToFavourite($event)"></app-product-card>
+   <app-pagination [pageInfo]="pageInfo()" (onPageChange)="linkChange($event)" (onSizeChange)="sizeChange($event)"></app-pagination>
+</div>
+

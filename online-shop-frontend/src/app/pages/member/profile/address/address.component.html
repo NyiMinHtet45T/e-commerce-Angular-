@@ -1,0 +1,107 @@
+<div *ngIf="showModel()" (click)="handleClose()" class="w-full h-screen fixed top-0 left-0 bg-slate-800/50 z-40"></div>
+<div class="mt-16 min-h-screen relative">
+   <div>
+      <div class="flex justify-end space-x-4 me-5">
+         <button (click)="actionButton('update')" class="flex items-center">
+            <mat-icon class="text-yellow-600">update</mat-icon>
+            <span class="text-yellow-900 underline">Update</span>
+         </button>
+         <button (click)="actionButton('delete')" class="flex items-center">
+            <mat-icon class="text-red-700">delete</mat-icon>
+            <span class="text-red-900 underline">Delete</span>
+         </button>
+      </div>
+      <app-title-contents [title]="handleTitle()"></app-title-contents>
+      @if (showMessage()) {
+         <div ngClass="true" class="flex items-center mt-8 ms-6">
+            <mat-icon class="text-orange-700">ads_click</mat-icon>
+            <span
+            [class.text-yellow-600]="text() === 'update'"
+            [class.text-red-600]="text() === 'delete'"
+            [class.text-lime-600]="text() === 'order'"
+            class="underline"
+            >select the box if you want to {{text()}}</span>
+         </div>
+      }
+      <div
+         class=" mt-5 w-[95%] grid justify-items-stretch grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-5 mx-auto">
+         @for (item of addressList(); track $index) {
+         <button [disabled]="!showMessage()" (click)="gateAddressSender(item)"
+            class="shadow-lg cursor-pointer py-2 hover:border-dashed duration-150 transition hover:bg-slate-400 border-2 border-double border-black gap-2 md:gap-3 rounded-lg bg-slate-300">
+            <div class="ms-4 me-4 space-y-1 text-slate-700 hover:text-white">
+               <div class="space-x-5 flex justify-between  ">
+                  <span>City: </span>
+                  <span class=" px-1 rounded-lg bg-slate-400/70">{{ item.street }}</span>
+               </div>
+               <div class="space-x-5 flex justify-between">
+                  <span>Street: </span>
+                  <span class=" px-1 rounded-lg bg-slate-400/70">{{ item.city }}</span>
+               </div>
+               <div class="space-x-5 flex justify-between">
+                  <span>House No.: </span>
+                  <span class=" px-1 rounded-lg bg-slate-400/70">{{ item.houseNo }}</span>
+               </div>
+            </div>
+         </button>
+         }
+         @if (!showMessage() && !isorder()) {
+            <div (click)="handleOpen()"
+            class="shadow-lg cursor-pointer py-2 hover:border-dashed duration-150 transition hover:bg-slate-400 hover:text-white border-2 border-dotted border-black gap-2 md:gap-3 rounded-lg bg-slate-300">
+            <div class="flex justify-center  text-6xl">
+               <h1>+</h1>
+            </div>
+         </div>
+         }
+      </div>
+   </div>
+   @if (showModel()) {
+      <div class="fixed bg-slate-300 z-50 rounded-lg shadow-lg shadow-white md:w-[430px] w-[300px] top-[25%] lg:left-[35%] md:left-[25%] sm:left-[25%] left-[20%] h-auto">
+         <div class="w-[90%] pb-4 mx-auto">
+            <div class="absolute right-4">
+               <button (click)="handleClose()">
+                  <mat-icon class="text-sm font-bold md:text-lg">
+                     close
+                  </mat-icon>
+               </button>
+            </div>
+            <div class=" mt-3 font-bold text-2xl text-slate-700">{{text().toUpperCase()}}</div>
+            <form [formGroup]="addressForm">
+               <div class="py-1">
+                  <app-form-contents label="Street" [touched]="addressForm.get('street')?.touched"
+                     [invalid]="addressForm.get('street')?.invalid">
+                     <input formControlName="street" input type="text"
+                        [ngClass]="{'border-red-700': addressForm.get('street')?.touched && addressForm.get('street')?.invalid}"
+                        class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                     <span text *ngIf="addressForm.get('street')?.errors?.['required']">please enter street name!</span>
+                  </app-form-contents>
+               </div>
+               <div class="py-1">
+                  <app-form-contents label="city" [touched]="addressForm.get('city')?.touched"
+                     [invalid]="addressForm.get('city')?.invalid">
+                     <input formControlName="city" input type="text"
+                        [ngClass]="{'border-red-700': addressForm.get('city')?.touched && addressForm.get('city')?.invalid}"
+                        class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                     <span text *ngIf="addressForm.get('city')?.errors?.['required']">please enter City name!</span>
+                  </app-form-contents>
+               </div>
+               <div class="py-1">
+                  <app-form-contents label="houseNo" [touched]="addressForm.get('houseNo')?.touched"
+                     [invalid]="addressForm.get('houseNo')?.invalid">
+                     <input formControlName="houseNo" input type="text"
+                        [ngClass]="{'border-red-700': addressForm.get('houseNo')?.touched && addressForm.get('houseNo')?.invalid}"
+                        class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500">
+                     <span text *ngIf="addressForm.get('houseNo')?.errors?.['required']">please enter house Number!</span>
+                  </app-form-contents>
+               </div>
+            </form>
+            <div class="mt-3">
+               <button (click)="handleAddress()" class="w-full bg-slate-600 text-white p-2 rounded-lg mb-6 
+            hover:bg-slate-200 hover:text-black hover:border hover:border-gray-800">
+                  {{text().toUpperCase()}}
+               </button>
+            </div>
+         </div>
+      </div>
+   }
+
+</div>
